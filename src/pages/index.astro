@@ -48,7 +48,7 @@ const posts = (await getCollection('blog'))
 
 			<section class="reveal border-t border-border pt-12 mb-16">
 				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-8">Labs</h2>
-				<div class="grid md:grid-cols-3 gap-8">
+				<div class="grid md:grid-cols-2 gap-8">
 					<a href="https://salience.glebkalinin.com/" class="lab-card block group no-underline border border-border bg-surface-alt/40 rounded-lg p-6">
 						<h3 class="text-lg font-serif mb-2 text-ink group-hover:text-accent transition-colors">Salience</h3>
 						<p class="text-ink-light text-base">Exploring what stands out. A research space for ideas on attention, meaning, and what deserves to be noticed.</p>
@@ -57,9 +57,15 @@ const posts = (await getCollection('blog'))
 						<h3 class="text-lg font-serif mb-2 text-ink group-hover:text-accent transition-colors">Claude Code Lab</h3>
 						<p class="text-ink-light text-base">Hands-on experiments with AI-assisted development. Learning to build with Claude Code as a collaborative tool.</p>
 					</a>
+				</div>
+			</section>
+
+			<section class="reveal border-t border-border pt-12 mb-16">
+				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-8">Projects</h2>
+				<div class="grid md:grid-cols-2 gap-8">
 					<a href="https://verity.salient.community/" class="lab-card block group no-underline border border-border bg-surface-alt/40 rounded-lg p-6">
 						<h3 class="text-lg font-serif mb-2 text-ink group-hover:text-accent transition-colors">Verity</h3>
-						<p class="text-ink-light text-base">AI-powered Telegram agent. Research, collect knowledge, recall from your vault, process voice — all from chat.</p>
+						<p class="text-ink-light text-base">Open-source Telegram agent built with Claude Agent SDK. Research, collect knowledge, track habits, process voice — self-hosted, privacy-first.</p>
 					</a>
 				</div>
 			</section>
