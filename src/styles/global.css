@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1a1a1a;
+  --color-ink-light: #4a4a4a;
+  --color-ink-muted: #8a8a8a;
+  --color-surface: #fafaf8;
+  --color-surface-alt: #f0efeb;
+  --color-accent: #2d5a27;
+  --color-accent-light: #3d7a35;
+  --color-border: #e0dfd8;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: "Newsreader", "Georgia", serif;
+}
+
+
+@layer base {
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-semibold text-ink;
+    line-height: 1.2;
+  }
+
+  a {
+    @apply text-accent underline-offset-2 decoration-accent/30;
+  }
+
+  a:hover {
+    @apply text-accent-light decoration-accent;
+  }
+
+  .prose {
+    @apply max-w-none;
+  }
+
+  .prose p {
+    @apply mb-6;
+  }
+
+  .prose h2 {
+    @apply text-2xl mt-12 mb-4;
+  }
+
+  .prose h3 {
+    @apply text-xl mt-8 mb-3;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-accent/30 pl-5 italic text-ink-light my-8;
+  }
+
+  .prose ul, .prose ol {
+    @apply my-4 pl-6;
+  }
+
+  .prose li {
+    @apply mb-2;
+  }
+
+  .prose code {
+    @apply bg-surface-alt px-1.5 py-0.5 rounded text-sm;
+  }
+
+  .prose pre {
+    @apply bg-ink text-surface p-6 rounded-lg overflow-x-auto my-8;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
+
+  .prose img {
+    @apply rounded-lg my-8;
+  }
+
+  .prose hr {
+    @apply border-border my-12;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

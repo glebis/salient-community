@@ -1,0 +1,52 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main class="max-w-3xl mx-auto px-6 py-20">
+			<section class="mb-20">
+				<h1 class="text-4xl md:text-5xl font-serif font-semibold leading-tight mb-6">
+					Building what<br />needs to be built.
+				</h1>
+				<p class="text-xl text-ink-light leading-relaxed max-w-2xl">
+					A community at the intersection of philosophy, values, and an action-driven approach to technology. For people who are already building — and want what they build to matter.
+				</p>
+			</section>
+
+			<section class="border-t border-border pt-12 mb-16">
+				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-8">What we care about</h2>
+				<div class="grid md:grid-cols-3 gap-8">
+					<div>
+						<h3 class="text-lg font-serif mb-2">Philosophy</h3>
+						<p class="text-ink-light text-base">Grounding technology in deeper questions about what matters and why.</p>
+					</div>
+					<div>
+						<h3 class="text-lg font-serif mb-2">Values</h3>
+						<p class="text-ink-light text-base">Making the implicit explicit. Building with intention, not just momentum.</p>
+					</div>
+					<div>
+						<h3 class="text-lg font-serif mb-2">Action</h3>
+						<p class="text-ink-light text-base">Using the power of tools for global good. Shipping things that serve people.</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="border-t border-border pt-12">
+				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-6">Latest writing</h2>
+				<p class="text-ink-light">
+					<a href="/blog" class="text-accent">Read our posts &rarr;</a>
+				</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

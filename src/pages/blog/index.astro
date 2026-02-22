@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Writing — ${SITE_TITLE}`} description="Essays and reflections from the Salient community." />
+	</head>
+	<body>
+		<Header />
+		<main class="max-w-3xl mx-auto px-6 py-16">
+			<h1 class="text-3xl md:text-4xl font-serif font-semibold mb-12">Writing</h1>
+			<ul class="space-y-8">
+				{posts.map((post) => (
+					<li>
+						<a href={`/blog/${post.id}/`} class="block group no-underline">
+							<h2 class="text-xl font-serif font-medium text-ink group-hover:text-accent transition-colors mb-1">
+								{post.data.title}
+							</h2>
+							<p class="text-sm text-ink-muted">
+								<FormattedDate date={post.data.pubDate} />
+							</p>
+							{post.data.description && (
+								<p class="text-ink-light mt-2">{post.data.description}</p>
+							)}
+						</a>
+					</li>
+				))}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>
