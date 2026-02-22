@@ -14,17 +14,17 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<Header />
 		<main class="max-w-3xl mx-auto px-6 py-20">
 			<section class="mb-20">
-				<h1 class="text-4xl md:text-5xl font-serif font-semibold leading-tight mb-6">
+				<h1 class="animate-hero text-4xl md:text-5xl font-serif font-semibold leading-tight mb-6">
 					Building what<br />needs to be built.
 				</h1>
-				<p class="text-xl text-ink-light leading-relaxed max-w-2xl">
+				<p class="animate-hero-delay text-xl text-ink-light leading-relaxed max-w-2xl">
 					A community at the intersection of philosophy, values, and an action-driven approach to technology. For people who are already building — and want what they build to matter.
 				</p>
 			</section>
 
-			<section class="border-t border-border pt-12 mb-16">
+			<section class="reveal border-t border-border pt-12 mb-16">
 				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-8">What we care about</h2>
-				<div class="grid md:grid-cols-3 gap-8">
+				<div class="reveal-stagger grid md:grid-cols-3 gap-8">
 					<div>
 						<h3 class="text-lg font-serif mb-2">Philosophy</h3>
 						<p class="text-ink-light text-base">Grounding technology in deeper questions about what matters and why.</p>
@@ -40,27 +40,47 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				</div>
 			</section>
 
-			<section class="border-t border-border pt-12 mb-16">
+			<section class="reveal border-t border-border pt-12 mb-16">
 				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-8">Labs</h2>
 				<div class="grid md:grid-cols-2 gap-8">
-					<a href="https://salience.glebkalinin.com/" class="block group no-underline border border-border rounded-lg p-6 hover:border-accent/40 transition-colors">
+					<a href="https://salience.glebkalinin.com/" class="lab-card block group no-underline border border-border rounded-lg p-6">
 						<h3 class="text-lg font-serif mb-2 text-ink group-hover:text-accent transition-colors">Salience</h3>
 						<p class="text-ink-light text-base">Exploring what stands out. A research space for ideas on attention, meaning, and what deserves to be noticed.</p>
 					</a>
-					<a href="https://claude.salient.community/" class="block group no-underline border border-border rounded-lg p-6 hover:border-accent/40 transition-colors">
+					<a href="https://claude.salient.community/" class="lab-card block group no-underline border border-border rounded-lg p-6">
 						<h3 class="text-lg font-serif mb-2 text-ink group-hover:text-accent transition-colors">Claude Code Lab</h3>
 						<p class="text-ink-light text-base">Hands-on experiments with AI-assisted development. Learning to build with Claude Code as a collaborative tool.</p>
 					</a>
 				</div>
 			</section>
 
-			<section class="border-t border-border pt-12">
+			<section class="reveal border-t border-border pt-12">
 				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-6">Latest writing</h2>
 				<p class="text-ink-light">
-					<a href="/blog" class="text-accent">Read our posts &rarr;</a>
+					<a href="/blog" class="arrow-link text-accent">Read our posts <span class="arrow">&rarr;</span></a>
 				</p>
 			</section>
 		</main>
 		<Footer />
+
+		<script>
+			const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
+			if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((e) => {
+							if (e.isIntersecting) {
+								e.target.classList.add('is-visible');
+								observer.unobserve(e.target);
+							}
+						});
+					},
+					{ threshold: 0.15 }
+				);
+				reveals.forEach((el) => observer.observe(el));
+			} else {
+				reveals.forEach((el) => el.classList.add('is-visible'));
+			}
+		</script>
 	</body>
 </html>
