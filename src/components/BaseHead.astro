@@ -28,26 +28,22 @@ const ogImage = image ?? new URL('/og-default.png', Astro.site).toString();
 />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Fonts: preconnect + async load to avoid render blocking -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-	rel="preload"
-	as="style"
-	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-/>
-<link
-	href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-	rel="stylesheet"
-	media="print"
-	onload="this.media='all'"
-/>
-<noscript>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-		rel="stylesheet"
-	/>
-</noscript>
+<!-- Restore the chosen lead accent before first paint -->
+<script is:inline>
+	try {
+		var acc = JSON.parse(localStorage.getItem('salient-accent') || 'null');
+		if (acc && acc.a) {
+			var s = document.documentElement.style;
+			s.setProperty('--color-accent', acc.a);
+			s.setProperty('--color-accent-light', acc.l);
+			s.setProperty('--illo-rotate', (acc.r || 0) + 'deg');
+		}
+	} catch (e) {}
+</script>
+
+<!-- Fonts: self-hosted Monaspace, preload the above-the-fold faces -->
+<link rel="preload" as="font" type="font/woff2" href="/fonts/MonaspaceNeon-Regular.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/MonaspaceXenon-Bold.woff2" crossorigin />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

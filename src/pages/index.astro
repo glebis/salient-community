@@ -1,5 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import illoAiDesign from '../assets/illos/ai-design.png';
+import illoSalience from '../assets/illos/salience.png';
+import illoClaudeLab from '../assets/illos/claude-lab.png';
+import illoVerity from '../assets/illos/verity.png';
+import illo4dGraph from '../assets/illos/4dgraph.png';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
@@ -9,6 +15,21 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 const posts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 5);
+
+const heroLines = [['Building', 'what'], ['needs', 'to', 'be', 'built.']];
+let wordIndex = 0;
+
+const manifesto =
+	"Anyone can build anything now. The question is no longer what we can build — it's what we should build.";
+
+const gases = [
+	{ sym: 'Kr', name: 'krypton' },
+	{ sym: 'Ne', name: 'neon' },
+	{ sym: 'Ar', name: 'argon' },
+	{ sym: 'Xe', name: 'xenon' },
+	{ sym: 'Rn', name: 'radon' },
+];
+const wordChips = ['philosophy', 'values', 'action', 'meaning', 'taste', 'build', 'ship'];
 ---
 
 <!doctype html>
@@ -18,81 +39,184 @@ const posts = (await getCollection('blog'))
 	</head>
 	<body>
 		<Header />
-		<main class="max-w-3xl mx-auto px-6 py-20">
-			<section class="mb-20">
-				<h1 class="animate-hero text-4xl md:text-5xl font-serif font-semibold leading-tight mb-6">
-					Building what<br />needs to be built.
+		<main>
+			<!-- Hero: huge display type -->
+			<section class="max-w-6xl mx-auto px-6 pt-20 md:pt-28 pb-14">
+				<h1 class="hero-display mb-10">
+					{heroLines.map((line) => (
+						<span class="block">
+							{line.map((word) => (
+								<>
+									<span class="word-mask">
+										<span
+											class:list={['word', { 'text-accent': word === 'built.' }]}
+											style={`--word-delay: ${80 * wordIndex++}ms`}
+										>
+											{word}
+										</span>
+									</span>
+									{' '}
+								</>
+							))}
+						</span>
+					))}
 				</h1>
-				<p class="animate-hero-delay text-xl text-ink-light leading-relaxed max-w-2xl">
+				<p class="animate-hero-delay text-lg md:text-xl text-ink-light leading-relaxed max-w-2xl">
 					A community at the intersection of philosophy, values, and an action-driven approach to technology. For people who are already building — and want what they build to matter.
 				</p>
 			</section>
 
-			<section class="reveal border-t border-border pt-12 mb-16">
-				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-8">What we care about</h2>
-				<div class="reveal-stagger grid md:grid-cols-3 gap-8">
-					<div>
-						<h3 class="text-lg font-serif mb-2">Philosophy</h3>
-						<p class="text-ink-light text-base">Grounding technology in deeper questions about what matters and why.</p>
-					</div>
-					<div>
-						<h3 class="text-lg font-serif mb-2">Values</h3>
-						<p class="text-ink-light text-base">Making the implicit explicit. Building with intention, not just momentum.</p>
-					</div>
-					<div>
-						<h3 class="text-lg font-serif mb-2">Action</h3>
-						<p class="text-ink-light text-base">Using the power of tools for global good. Shipping things that serve people.</p>
-					</div>
-				</div>
-			</section>
-
-			<section class="reveal border-t border-border pt-12 mb-16">
-				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-8">Labs</h2>
-				<div class="grid md:grid-cols-2 gap-8">
-					<a href="https://salience.glebkalinin.com/" class="lab-card block group no-underline border border-border bg-surface-alt/40 rounded-lg p-6">
-						<h3 class="text-lg font-serif mb-2 text-ink group-hover:text-accent transition-colors">Salience</h3>
-						<p class="text-ink-light text-base">Exploring what stands out. A research space for ideas on attention, meaning, and what deserves to be noticed.</p>
-					</a>
-					<a href="https://claude.salient.community/" class="lab-card block group no-underline border border-border bg-surface-alt/40 rounded-lg p-6">
-						<h3 class="text-lg font-serif mb-2 text-ink group-hover:text-accent transition-colors">Claude Code Lab</h3>
-						<p class="text-ink-light text-base">Hands-on experiments with AI-assisted development. Learning to build with Claude Code as a collaborative tool.</p>
-					</a>
-				</div>
-			</section>
-
-			<section class="reveal border-t border-border pt-12 mb-16">
-				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-8">Projects</h2>
-				<div class="grid md:grid-cols-2 gap-8">
-					<a href="https://verity.salient.community/" class="lab-card block group no-underline border border-border bg-surface-alt/40 rounded-lg p-6">
-						<h3 class="text-lg font-serif mb-2 text-ink group-hover:text-accent transition-colors">Verity</h3>
-						<p class="text-ink-light text-base">Open-source Telegram agent built with Claude Agent SDK. Research, collect knowledge, track habits, process voice — self-hosted, privacy-first.</p>
-					</a>
-					<a href="https://4dgraph.salient.community/" class="lab-card block group no-underline border border-border bg-surface-alt/40 rounded-lg p-6">
-						<h3 class="text-lg font-serif mb-2 text-ink group-hover:text-accent transition-colors">4D Graph</h3>
-						<p class="text-ink-light text-base">Obsidian plugin that renders your vault as a navigable 4D graph. Rotate across hyperplanes to reveal hidden structural patterns in your knowledge.</p>
-					</a>
-				</div>
-			</section>
-
-			<section class="reveal border-t border-border pt-12">
-				<h2 class="text-sm font-sans font-medium uppercase tracking-widest text-ink-muted mb-8">Latest writing</h2>
-				<ul class="space-y-5">
-					{posts.map((post) => (
-						<li>
-							<a href={`/blog/${post.id}/`} class="group block no-underline">
-								<span class="text-lg font-serif text-ink group-hover:text-accent transition-colors">{post.data.title}</span>
-								<span class="text-sm text-ink-muted ml-3"><FormattedDate date={post.data.pubDate} /></span>
-							</a>
-						</li>
+			<!-- Physics stage: noble-gas chips, drag & click to switch the lead accent -->
+			<section class="max-w-6xl mx-auto px-6 mb-28">
+				<div class="physics-stage" id="physics-stage">
+					<p class="physics-hint label text-ink-muted">drag the elements · click a gas to change the lead</p>
+					{gases.map((g) => (
+						<button class="chip gas" data-gas={g.name} type="button">
+							<span class="sym">{g.sym}</span>
+							{g.name}
+						</button>
 					))}
-				</ul>
+					{wordChips.map((w) => (
+						<span class="chip">{w}</span>
+					))}
+				</div>
 			</section>
+
+			<!-- Manifesto: words light up as you scroll -->
+			<section class="max-w-4xl mx-auto px-6 py-20 md:py-32">
+				<p class="manifesto" id="manifesto">
+					{manifesto.split(' ').map((w) => (
+						<>
+							<span class="w">{w}</span>
+							{' '}
+						</>
+					))}
+				</p>
+			</section>
+
+			<div class="max-w-3xl mx-auto px-6">
+				<section class="reveal border-t border-border pt-12 mb-16">
+					<h2 class="label text-accent mb-8" data-decode>What we care about</h2>
+					<div class="reveal-stagger grid md:grid-cols-3 gap-8">
+						<div>
+							<h3 class="text-xl font-serif mb-2">Philosophy</h3>
+							<p class="text-ink-light text-base">Grounding technology in deeper questions about what matters and why.</p>
+						</div>
+						<div>
+							<h3 class="text-xl font-serif mb-2">Values</h3>
+							<p class="text-ink-light text-base">Making the implicit explicit. Building with intention, not just momentum.</p>
+						</div>
+						<div>
+							<h3 class="text-xl font-serif mb-2">Action</h3>
+							<p class="text-ink-light text-base">Using the power of tools for global good. Shipping things that serve people.</p>
+						</div>
+					</div>
+				</section>
+
+				<section class="reveal border-t border-border pt-12 mb-16">
+					<h2 class="label text-accent mb-8" data-decode>Labs</h2>
+					<div class="grid md:grid-cols-2 gap-8">
+						<a href="https://ai-design.salient.community/" class="lab-card featured md:col-span-2 grid md:grid-cols-2 group no-underline border border-border bg-surface-alt/40 rounded-lg overflow-hidden">
+							<div class="p-8">
+								<p class="label text-accent mb-4">AI Design Lab</p>
+								<h3 class="text-2xl md:text-3xl font-serif font-bold mb-3 text-ink group-hover:text-accent transition-colors">Goal-Driven Design</h3>
+								<p class="text-ink-light text-base mb-4">A small-cohort crash course on designing with AI — judgment first, tools second. Five moves: goal, job, build, taste, ship. Leave with a shipped prototype, a reusable DESIGN.md, and taste that survives the tools.</p>
+								<span class="arrow-link label text-ink-muted group-hover:text-accent transition-colors">ai-design.salient.community <span class="arrow">→</span></span>
+							</div>
+							<div class="card-illo order-first md:order-none border-b md:border-b-0 md:border-l border-border">
+								<Image src={illoAiDesign} alt="" widths={[640, 1024, 1536]} sizes="(min-width: 768px) 384px, 100vw" />
+							</div>
+						</a>
+						<a href="https://salience.glebkalinin.com/" class="lab-card block group no-underline border border-border bg-surface-alt/40 rounded-lg overflow-hidden">
+							<div class="card-illo border-b border-border">
+								<Image src={illoSalience} alt="" widths={[640, 1024]} sizes="(min-width: 768px) 384px, 100vw" />
+							</div>
+							<div class="p-6">
+								<h3 class="text-xl font-serif mb-2 text-ink group-hover:text-accent transition-colors">Salience</h3>
+								<p class="text-ink-light text-base">Exploring what stands out. A research space for ideas on attention, meaning, and what deserves to be noticed.</p>
+							</div>
+						</a>
+						<a href="https://claude.salient.community/" class="lab-card block group no-underline border border-border bg-surface-alt/40 rounded-lg overflow-hidden">
+							<div class="card-illo border-b border-border">
+								<Image src={illoClaudeLab} alt="" widths={[640, 1024]} sizes="(min-width: 768px) 384px, 100vw" />
+							</div>
+							<div class="p-6">
+								<h3 class="text-xl font-serif mb-2 text-ink group-hover:text-accent transition-colors">Claude Code Lab</h3>
+								<p class="text-ink-light text-base">Hands-on experiments with AI-assisted development. Learning to build with Claude Code as a collaborative tool.</p>
+							</div>
+						</a>
+					</div>
+				</section>
+
+				<section class="reveal border-t border-border pt-12 mb-16">
+					<h2 class="label text-accent mb-8" data-decode>Projects</h2>
+					<div class="grid md:grid-cols-2 gap-8">
+						<a href="https://verity.salient.community/" class="lab-card block group no-underline border border-border bg-surface-alt/40 rounded-lg overflow-hidden">
+							<div class="card-illo border-b border-border">
+								<Image src={illoVerity} alt="" widths={[640, 1024]} sizes="(min-width: 768px) 384px, 100vw" />
+							</div>
+							<div class="p-6">
+								<h3 class="text-xl font-serif mb-2 text-ink group-hover:text-accent transition-colors">Verity</h3>
+								<p class="text-ink-light text-base">Open-source Telegram agent built with Claude Agent SDK. Research, collect knowledge, track habits, process voice — self-hosted, privacy-first.</p>
+							</div>
+						</a>
+						<a href="https://4dgraph.salient.community/" class="lab-card block group no-underline border border-border bg-surface-alt/40 rounded-lg overflow-hidden">
+							<div class="card-illo border-b border-border">
+								<Image src={illo4dGraph} alt="" widths={[640, 1024]} sizes="(min-width: 768px) 384px, 100vw" />
+							</div>
+							<div class="p-6">
+								<h3 class="text-xl font-serif mb-2 text-ink group-hover:text-accent transition-colors">4D Graph</h3>
+								<p class="text-ink-light text-base">Obsidian plugin that renders your vault as a navigable 4D graph. Rotate across hyperplanes to reveal hidden structural patterns in your knowledge.</p>
+							</div>
+						</a>
+					</div>
+				</section>
+
+				<section class="reveal border-t border-border pt-12 mb-16">
+					<h2 class="label text-accent mb-8" data-decode>Latest writing</h2>
+					<ul class="space-y-5">
+						{posts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`} class="group block no-underline">
+									<span class="text-lg font-serif text-ink group-hover:text-accent transition-colors">{post.data.title}</span>
+									<span class="text-sm text-ink-muted ml-3"><FormattedDate date={post.data.pubDate} /></span>
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+				<section class="reveal border-t border-border pt-12" aria-label="Subscribe to the waitlist">
+					<h2 class="label text-accent mb-8" data-decode>Waitlist</h2>
+					<p class="text-2xl md:text-3xl font-serif font-bold mb-3">Want in?</p>
+					<p class="text-ink-light mb-8 max-w-xl">The community is small and intentional. Leave your email and we'll write when a seat opens.</p>
+					<form class="waitlist-form max-w-xl" data-signup-form novalidate>
+						<label class="sr-only" for="waitlist-email">Email address</label>
+						<div class="flex flex-col sm:flex-row gap-3">
+							<input
+								id="waitlist-email"
+								name="email"
+								type="email"
+								autocomplete="email"
+								placeholder="you@example.com"
+								aria-describedby="waitlist-status"
+								required
+							/>
+							<button type="submit" data-submit-button>Subscribe to waitlist</button>
+						</div>
+						<p id="waitlist-status" class="form-status text-sm text-ink-muted mt-3" data-form-status aria-live="polite">
+							One confirmation email. No lists, no noise.
+						</p>
+					</form>
+				</section>
+			</div>
 		</main>
 		<Footer />
 
 		<script>
+			// --- Reveal on scroll ---
+			const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
-			if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			if (!prefersReduced) {
 				const observer = new IntersectionObserver(
 					(entries) => {
 						entries.forEach((e) => {
@@ -107,6 +231,281 @@ const posts = (await getCollection('blog'))
 				reveals.forEach((el) => observer.observe(el));
 			} else {
 				reveals.forEach((el) => el.classList.add('is-visible'));
+			}
+
+			// --- Terminal decode effect on section labels ---
+			const GLYPHS = '#%&$@/\\*+=<>0123456789abcdefghijklmnopqrstuvwxyz';
+			function decode(el: HTMLElement) {
+				const text = el.textContent ?? '';
+				const total = Math.max(16, text.length * 2);
+				let frame = 0;
+				el.classList.add('decoding');
+				const tick = () => {
+					frame++;
+					const resolved = Math.floor((frame / total) * text.length);
+					el.textContent =
+						text.slice(0, resolved) +
+						[...text.slice(resolved)]
+							.map((c) => (c === ' ' ? ' ' : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]))
+							.join('');
+					if (resolved < text.length) {
+						requestAnimationFrame(tick);
+					} else {
+						el.textContent = text;
+						el.classList.remove('decoding');
+					}
+				};
+				requestAnimationFrame(tick);
+			}
+			if (!prefersReduced) {
+				const labelObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((e) => {
+							if (e.isIntersecting) {
+								decode(e.target as HTMLElement);
+								labelObserver.unobserve(e.target);
+							}
+						});
+					},
+					{ threshold: 0.5 }
+				);
+				document.querySelectorAll('[data-decode]').forEach((el) => labelObserver.observe(el));
+			}
+
+			// --- Manifesto: scroll-driven word lighting ---
+			const man = document.getElementById('manifesto');
+			if (man) {
+				const words = [...man.querySelectorAll('.w')];
+				if (prefersReduced) {
+					words.forEach((w) => w.classList.add('lit'));
+				} else {
+					let ticking = false;
+					const update = () => {
+						ticking = false;
+						const r = man.getBoundingClientRect();
+						const vh = window.innerHeight;
+						const start = vh * 0.9;
+						const end = vh * 0.38;
+						const p = Math.min(1, Math.max(0, (start - r.top) / (start - end)));
+						const lit = Math.round(p * words.length);
+						words.forEach((w, i) => {
+							w.classList.toggle('lit', i < lit);
+							w.classList.toggle('current', i === lit - 1 && p < 1);
+						});
+					};
+					const onScroll = () => {
+						if (!ticking) {
+							ticking = true;
+							requestAnimationFrame(update);
+						}
+					};
+					window.addEventListener('scroll', onScroll, { passive: true });
+					update();
+				}
+			}
+
+			// --- Waitlist form (double opt-in via /api/subscribe) ---
+			function setStatus(form: HTMLFormElement, message: string, state: 'neutral' | 'success' | 'error') {
+				const status = form.querySelector<HTMLElement>('[data-form-status]');
+				if (!status) return;
+				status.textContent = message;
+				status.dataset.state = state;
+			}
+
+			for (const form of document.querySelectorAll<HTMLFormElement>('[data-signup-form]')) {
+				form.addEventListener('submit', async (event) => {
+					event.preventDefault();
+					const email = new FormData(form).get('email');
+					const button = form.querySelector<HTMLButtonElement>('[data-submit-button]');
+
+					setStatus(form, 'Sending confirmation email...', 'neutral');
+					button?.setAttribute('disabled', 'true');
+
+					try {
+						const response = await fetch('/api/subscribe', {
+							method: 'POST',
+							headers: { 'content-type': 'application/json' },
+							body: JSON.stringify({ email }),
+						});
+						const body = (await response.json()) as { message?: string; ok?: boolean };
+						setStatus(form, body.message ?? 'Signup is temporarily unavailable.', body.ok ? 'success' : 'error');
+						if (body.ok) form.reset();
+					} catch {
+						setStatus(form, 'Signup is temporarily unavailable.', 'error');
+					} finally {
+						button?.removeAttribute('disabled');
+					}
+				});
+			}
+
+			// Confirmation link redirects back to /?signup=<state>
+			const signupState = new URLSearchParams(window.location.search).get('signup');
+			if (signupState) {
+				const firstForm = document.querySelector<HTMLFormElement>('[data-signup-form]');
+				const messages: Record<string, [string, 'success' | 'error']> = {
+					confirmed: ['Confirmed. You are on the waitlist.', 'success'],
+					already_confirmed: ['Already confirmed. You are on the waitlist.', 'success'],
+					expired: ['That confirmation link expired. Submit your email again for a fresh link.', 'error'],
+					invalid: ['That confirmation link is not valid. Submit your email again for a fresh link.', 'error'],
+				};
+				const entry = messages[signupState];
+				if (firstForm && entry) {
+					setStatus(firstForm, entry[0], entry[1]);
+					firstForm.scrollIntoView({ block: 'center', behavior: 'smooth' });
+				}
+			}
+		</script>
+
+		<script>
+			// --- Physics stage: matter.js noble-gas chips ---
+			import Matter from 'matter-js';
+
+			// [accent, accent-light, hue-rotation for baked-violet illustrations]
+			const ACCENTS: Record<string, [string, string, number]> = {
+				krypton: ['#BC9AFA', '#CEB4FC', 0],
+				neon: ['#F5B8A5', '#F8CBBD', 113],
+				argon: ['#F1E170', '#F5EA94', 156],
+				xenon: ['#B6D162', '#C7DD85', 173],
+				radon: ['#82D2CF', '#A0DEDC', 277],
+			};
+
+			function setAccent(name: string) {
+				const pair = ACCENTS[name];
+				if (!pair) return;
+				const s = document.documentElement.style;
+				s.setProperty('--color-accent', pair[0]);
+				s.setProperty('--color-accent-light', pair[1]);
+				s.setProperty('--illo-rotate', `${pair[2]}deg`);
+				try {
+					localStorage.setItem('salient-accent', JSON.stringify({ name, a: pair[0], l: pair[1], r: pair[2] }));
+				} catch {}
+				document.querySelectorAll<HTMLElement>('.chip.gas').forEach((c) => {
+					c.classList.toggle('active', c.dataset.gas === name);
+				});
+			}
+
+			const stage = document.getElementById('physics-stage');
+			const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			// Restore saved accent (BaseHead set the CSS vars pre-paint; this
+			// re-normalizes stale payloads and marks the active chip)
+			let savedName = 'krypton';
+			try {
+				savedName = JSON.parse(localStorage.getItem('salient-accent') || 'null')?.name ?? 'krypton';
+			} catch {}
+			setAccent(savedName);
+
+			if (stage && reduced) {
+				stage.classList.add('static');
+				stage.querySelectorAll<HTMLElement>('.chip.gas').forEach((el) => {
+					el.addEventListener('click', () => setAccent(el.dataset.gas!));
+				});
+			} else if (stage) {
+				const { Engine, Bodies, Composite, Runner, Mouse, MouseConstraint, Events, Query, Body } = Matter;
+				const engine = Engine.create();
+				engine.gravity.y = 1;
+
+				const chipEls = [...stage.querySelectorAll<HTMLElement>('.chip')];
+				const W = () => stage.clientWidth;
+				const H = () => stage.clientHeight;
+
+				const WALL = 200;
+				let walls: Matter.Body[] = [];
+				function makeWalls() {
+					walls.forEach((w) => Composite.remove(engine.world, w));
+					walls = [
+						Bodies.rectangle(W() / 2, H() + WALL / 2, W() + WALL * 2, WALL, { isStatic: true }),
+						Bodies.rectangle(-WALL / 2, H() / 2 - H(), WALL, H() * 4, { isStatic: true }),
+						Bodies.rectangle(W() + WALL / 2, H() / 2 - H(), WALL, H() * 4, { isStatic: true }),
+					];
+					Composite.add(engine.world, walls);
+				}
+				makeWalls();
+
+				type ChipBody = Matter.Body & { el: HTMLElement; hw: number; hh: number };
+				const bodies: ChipBody[] = chipEls.map((el, i) => {
+					const w = el.offsetWidth;
+					const h = el.offsetHeight;
+					const x = 40 + Math.random() * Math.max(80, W() - 80);
+					const y = -h - 90 * i;
+					const body = Bodies.rectangle(x, y, w, h, {
+						chamfer: { radius: h / 2 },
+						restitution: 0.35,
+						friction: 0.08,
+						frictionAir: 0.012,
+					}) as ChipBody;
+					Body.rotate(body, (Math.random() - 0.5) * 0.5);
+					body.el = el;
+					body.hw = w / 2;
+					body.hh = h / 2;
+					return body;
+				});
+				Composite.add(engine.world, bodies);
+
+				Events.on(engine, 'afterUpdate', () => {
+					for (const b of bodies) {
+						// escaped bodies re-enter from the top
+						if (b.position.y > H() + 300 || b.position.x < -300 || b.position.x > W() + 300) {
+							Body.setPosition(b, { x: 60 + Math.random() * Math.max(60, W() - 120), y: -60 });
+							Body.setVelocity(b, { x: 0, y: 0 });
+						}
+						b.el.style.transform = `translate(${b.position.x - b.hw}px, ${b.position.y - b.hh}px) rotate(${b.angle}rad)`;
+					}
+				});
+
+				if (window.matchMedia('(pointer: fine)').matches) {
+					const mouse = Mouse.create(stage);
+					const mc = MouseConstraint.create(engine, {
+						mouse,
+						constraint: { stiffness: 0.15, damping: 0.1 },
+					});
+					Composite.add(engine.world, mc);
+					// let the page keep scrolling over the stage
+					// @ts-expect-error matter-js private handler
+					mouse.element.removeEventListener('wheel', mouse.mousewheel);
+					let downAt: { x: number; y: number } | null = null;
+					Events.on(mc, 'mousedown', () => {
+						downAt = { ...mc.mouse.position };
+					});
+					Events.on(mc, 'mouseup', () => {
+						if (!downAt) return;
+						const p = mc.mouse.position;
+						if (Math.hypot(p.x - downAt.x, p.y - downAt.y) < 6) {
+							const hit = Query.point(bodies, p)[0] as ChipBody | undefined;
+							const gas = hit?.el?.dataset.gas;
+							if (gas) setAccent(gas);
+						}
+						downAt = null;
+					});
+				} else {
+					chipEls.forEach((el) => {
+						el.addEventListener('click', () => {
+							if (el.dataset.gas) setAccent(el.dataset.gas);
+						});
+					});
+				}
+
+				const runner = Runner.create();
+				let running = false;
+				const io = new IntersectionObserver(
+					([e]) => {
+						if (e.isIntersecting && !running) {
+							running = true;
+							Runner.run(runner, engine);
+						} else if (!e.isIntersecting && running) {
+							running = false;
+							Runner.stop(runner);
+						}
+					},
+					{ threshold: 0.05 }
+				);
+				io.observe(stage);
+
+				let resizeTimer: ReturnType<typeof setTimeout>;
+				window.addEventListener('resize', () => {
+					clearTimeout(resizeTimer);
+					resizeTimer = setTimeout(makeWalls, 150);
+				});
 			}
 		</script>
 	</body>

@@ -1,44 +1,91 @@
 @import "tailwindcss";
 
-@theme {
-  --color-ink: #1a1a1a;
-  --color-ink-light: #4a4a4a;
-  --color-ink-muted: #8d6e63;
-  --color-surface: #efebe6;
-  --color-surface-alt: #e6e1da;
-  --color-accent: #5d4037;
-  --color-accent-light: #795548;
-  --color-border: #d7ccc8;
+/* ------------------------------------------------------------------
+   The Typographer's Terminal — tokens from ~/Sites/ai-design
+   Canvas: Carbon (tinted dark). Lead accent: Krypton (violet).
+   Swap the lead by changing --color-accent / --color-accent-light.
+   ------------------------------------------------------------------ */
 
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-serif: "Playfair Display", "Georgia", serif;
+@font-face {
+  font-family: "Monaspace Neon";
+  src: url("/fonts/MonaspaceNeon-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Monaspace Neon";
+  src: url("/fonts/MonaspaceNeon-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Monaspace Xenon";
+  src: url("/fonts/MonaspaceXenon-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Monaspace Xenon";
+  src: url("/fonts/MonaspaceXenon-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Monaspace Krypton";
+  src: url("/fonts/MonaspaceKrypton-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
+@theme {
+  /* Neutrals — Carbon canvas, never pure #000/#fff */
+  --color-ink: #f4f6f8; /* Bone */
+  --color-ink-light: #aab3bd; /* Ash */
+  --color-ink-muted: #7d8792;
+  --color-surface: #0c1116; /* Carbon */
+  --color-surface-alt: #0f151c; /* Panel */
+  --color-border: #262d35; /* Graphite */
+
+  /* Lead accent — Krypton. Alternates: neon #F5B8A5, argon #F1E170,
+     xenon #B6D162, radon #82D2CF */
+  --color-accent: #bc9afa;
+  --color-accent-light: #ceb4fc;
+
+  --font-sans: "Monaspace Neon", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: "Monaspace Xenon", ui-serif, serif;
+  --font-mech: "Monaspace Krypton", "Monaspace Neon", monospace;
+
+  --ease-terminal: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
 @layer base {
-  body {
-    @apply bg-surface text-ink font-sans antialiased;
-    font-size: 18px;
-    line-height: 1.7;
+  :root {
+    --dot: rgba(201, 209, 217, 0.05);
   }
 
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 100;
-    opacity: 0.12;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.55;
+    /* Dot-Grid Depth Rule: depth from the grid, not glows or gradients */
+    background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-surface);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-semibold text-ink;
-    line-height: 1.2;
+    @apply font-serif font-bold text-ink;
+    line-height: 1.15;
+    letter-spacing: -0.018em;
   }
 
   a {
@@ -47,6 +94,16 @@
 
   a:hover {
     @apply text-accent-light decoration-accent;
+  }
+
+  /* Tracked-uppercase eyebrow labels (Monaspace Krypton) */
+  .label {
+    font-family: var(--font-mech);
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    line-height: 1;
   }
 
   .prose {
@@ -66,7 +123,7 @@
   }
 
   .prose blockquote {
-    @apply border-l-4 border-accent/30 pl-5 italic text-ink-light my-8;
+    @apply border-l-4 border-accent/40 pl-5 italic text-ink-light my-8;
   }
 
   .prose ul, .prose ol {
@@ -78,19 +135,19 @@
   }
 
   .prose code {
-    @apply bg-surface-alt px-1.5 py-0.5 rounded text-sm;
+    @apply bg-surface-alt border border-border px-1.5 py-0.5 rounded-sm text-sm text-ink;
   }
 
   .prose pre {
-    @apply bg-ink text-surface p-6 rounded-lg overflow-x-auto my-8;
+    @apply bg-surface-alt border border-border text-ink p-6 rounded-lg overflow-x-auto my-8;
   }
 
   .prose pre code {
-    @apply bg-transparent p-0;
+    @apply bg-transparent border-0 p-0;
   }
 
   .prose img {
-    @apply rounded-lg my-8;
+    @apply rounded-lg border border-border my-8;
   }
 
   .prose hr {
@@ -98,7 +155,247 @@
   }
 }
 
-/* --- Animations --- */
+/* --- Hero: huge display type with word-rise reveal --- */
+
+.hero-display {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(3.4rem, 10vw, 8.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+.hero-display .word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.hero-display .word {
+  display: inline-block;
+  transform: translateY(115%);
+  animation: word-rise 900ms var(--ease-terminal) forwards;
+  animation-delay: var(--word-delay, 0ms);
+}
+
+@keyframes word-rise {
+  to { transform: translateY(0); }
+}
+
+/* --- Physics stage (matter.js): flat bordered panel, chips as bodies --- */
+
+.physics-stage {
+  position: relative;
+  height: 340px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: color-mix(in srgb, var(--color-surface-alt) 55%, transparent);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 26px 26px;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.chip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-alt);
+  color: var(--color-ink-light);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.chip:active {
+  cursor: grabbing;
+}
+
+.chip.gas {
+  font-family: var(--font-mech);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.chip.gas .sym {
+  font-weight: 400;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.chip.gas:focus {
+  outline: none;
+}
+
+.chip.gas:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.chip.gas.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-surface);
+}
+
+.physics-hint {
+  position: absolute;
+  left: 1.25rem;
+  top: 1rem;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Reduced motion / no-JS: chips flow statically */
+.physics-stage.static {
+  height: auto;
+  min-height: 0;
+  padding: 3.5rem 1.25rem 1.5rem;
+}
+
+.physics-stage.static .chip {
+  position: static;
+  margin: 0 0.4rem 0.6rem 0;
+}
+
+/* --- Manifesto: scroll-driven word lighting --- */
+
+.manifesto {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4.4vw, 3.4rem);
+  line-height: 1.18;
+  letter-spacing: -0.022em;
+}
+
+.manifesto .w {
+  color: color-mix(in srgb, var(--color-ink-light) 34%, transparent);
+  transition: color 240ms var(--ease-terminal);
+}
+
+.manifesto .w.lit {
+  color: var(--color-ink);
+}
+
+.manifesto .w.current {
+  color: var(--color-accent);
+}
+
+/* --- Section labels: terminal decode on reveal --- */
+
+.label.decoding {
+  color: var(--color-accent);
+}
+
+/* --- Card illustrations --- */
+
+.card-illo {
+  overflow: hidden;
+  background: var(--color-surface);
+  aspect-ratio: 2 / 1;
+}
+
+.card-illo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* illustrations follow the switchable lead accent */
+  filter: hue-rotate(var(--illo-rotate, 0deg));
+}
+
+@media (min-width: 768px) {
+  .lab-card.featured .card-illo {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+}
+
+/* --- Featured lab card --- */
+
+.lab-card.featured {
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+}
+
+.lab-card.featured:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 70%, var(--color-border));
+}
+
+/* --- Waitlist form: mono field, near-square button --- */
+
+.waitlist-form input[type='email'] {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  transition: border-color 200ms var(--ease-terminal);
+}
+
+.waitlist-form input[type='email']::placeholder {
+  color: var(--color-ink-muted);
+}
+
+.waitlist-form input[type='email']:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--color-accent) 60%, var(--color-border));
+}
+
+.waitlist-form button[type='submit'] {
+  font-family: var(--font-mech);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-surface);
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 4px;
+  padding: 0.8rem 1.4rem;
+  cursor: pointer;
+  transition: background-color 200ms var(--ease-terminal);
+}
+
+.waitlist-form button[type='submit']:hover {
+  background: var(--color-accent-light);
+  border-color: var(--color-accent-light);
+}
+
+.waitlist-form button[type='submit']:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.form-status[data-state='success'] {
+  color: var(--color-accent);
+}
+
+.form-status[data-state='error'] {
+  color: var(--color-ink);
+}
+
+/* --- Animations (ease-out only, no bounce) --- */
 
 @keyframes fade-up {
   from {
@@ -112,18 +409,18 @@
 }
 
 .animate-hero {
-  animation: fade-up 700ms cubic-bezier(0.25, 1, 0.5, 1) both;
+  animation: fade-up 700ms var(--ease-terminal) both;
 }
 
 .animate-hero-delay {
-  animation: fade-up 700ms cubic-bezier(0.25, 1, 0.5, 1) 150ms both;
+  animation: fade-up 700ms var(--ease-terminal) 150ms both;
 }
 
 .reveal {
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 500ms cubic-bezier(0.25, 1, 0.5, 1),
-              transform 500ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: opacity 500ms var(--ease-terminal),
+              transform 500ms var(--ease-terminal);
 }
 
 .reveal.is-visible {
@@ -134,30 +431,29 @@
 .reveal-stagger > * {
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 400ms cubic-bezier(0.25, 1, 0.5, 1),
-              transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: opacity 400ms var(--ease-terminal),
+              transform 400ms var(--ease-terminal);
 }
 
 .reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0); }
 .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 100ms; opacity: 1; transform: translateY(0); }
 .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 200ms; opacity: 1; transform: translateY(0); }
 
-/* Lab cards: lift on hover */
+/* Flat-Content Rule: cards lift one tonal step + border shift, no shadow */
 .lab-card {
-  transition: transform 250ms cubic-bezier(0.25, 1, 0.5, 1),
-              border-color 250ms cubic-bezier(0.25, 1, 0.5, 1),
-              box-shadow 250ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: border-color 250ms var(--ease-terminal),
+              background-color 250ms var(--ease-terminal);
 }
 
 .lab-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+  background-color: color-mix(in srgb, var(--color-surface-alt) 88%, var(--color-ink));
 }
 
 /* Arrow nudge on hover */
 .arrow-link .arrow {
   display: inline-block;
-  transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 200ms var(--ease-terminal);
 }
 
 .arrow-link:hover .arrow {
@@ -183,11 +479,6 @@
     opacity: 1;
     transform: none;
     transition: none;
-  }
-
-  .lab-card:hover {
-    transform: none;
-    box-shadow: none;
   }
 
   .arrow-link:hover .arrow {
