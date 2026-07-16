@@ -27,3 +27,4 @@ pnpm-debug.log*
 # local tool caches
 .enzyme/
 .enzyme-embeddings/
+.env*.local
